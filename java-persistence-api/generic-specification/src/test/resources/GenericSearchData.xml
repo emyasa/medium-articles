@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dataset>
+    <author id="0001" name="Craig Walls"/>
+    <book id="0001" title="Spring in Action" genre="Software Engineering" author_id="0001"/>
+
+    <author id="0002" name="Mark Fisher"/>
+    <book id="0002" title="Spring Integration in Action" genre="Software Engineering" author_id="0002"/>
+
+    <author id="0003" name="Robert Martin"/>
+    <book id="0003" title="Clean Code" genre="Sotware Development" author_id="0003"/>
+    <book id="0004" title="The Clean Coder" genre="Code of Conduct" author_id="0003"/>
+</dataset>
