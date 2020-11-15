@@ -22,6 +22,10 @@ public class Book {
     @ManyToOne
     private Author author;
 
+    public String getTitle() {
+        return title;
+    }
+
     // Required by JPA
     protected Book() {
     }

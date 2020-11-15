@@ -36,4 +36,13 @@ public class GenericSearchSpecificationInterationTest {
         Assert.assertEquals(2, books.size());
     }
 
+    @Test
+    public void searchMartinFisherBooks_thenReturnSpringIntegrationBook() {
+        List<String> bookColumns = Arrays.asList("title", "genre", "author.name");
+
+        GenericSearchSpecification<Book> searchSpecification = new GenericSearchSpecification<>(bookColumns, "Mark Fisher");
+        List<Book> books = bookRepository.findAll(searchSpecification);
+        Assert.assertEquals(1, books.size());
+        Assert.assertEquals("Spring Integration in Action", books.get(0).getTitle());
+    }
 }
