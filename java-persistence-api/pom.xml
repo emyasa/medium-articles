@@ -61,5 +61,6 @@
 
     <modules>
         <module>generic-specification</module>
+        <module>join-fetch</module>
     </modules>
 </project>
