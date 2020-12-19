@@ -23,6 +23,13 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -41,6 +48,7 @@
 
     <modules>
         <module>java-persistence-api</module>
+        <module>core-concepts</module>
     </modules>
 
     <properties>
@@ -48,5 +56,6 @@
         <java.version>1.8</java.version>
         <junit.version>4.12</junit.version>
         <apache-commons.version>3.8.1</apache-commons.version>
+        <mockito.version>3.6.28</mockito.version>
     </properties>
 </project>
