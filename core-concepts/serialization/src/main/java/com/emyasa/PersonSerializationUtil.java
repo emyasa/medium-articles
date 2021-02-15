@@ -1,5 +1,6 @@
 package com.emyasa;
 
+import java.util.ArrayList;
 import org.apache.commons.lang3.SerializationUtils;
 
 import java.io.File;
@@ -25,6 +26,7 @@ public class PersonSerializationUtil {
     public List<Person> deserializePersonListFromFile() throws URISyntaxException, IOException {
         File file = new File(getClass().getResource(FILE_NAME).toURI());
         byte[] contents = Files.readAllBytes(file.toPath());
+        if (contents.length < 1) return new ArrayList<>();
         return SerializationUtils.deserialize(contents);
     }
 }
