@@ -15,5 +15,6 @@
 
     <modules>
         <module>serialization</module>
+        <module>aspect-oriented-programming</module>
     </modules>
 </project>
