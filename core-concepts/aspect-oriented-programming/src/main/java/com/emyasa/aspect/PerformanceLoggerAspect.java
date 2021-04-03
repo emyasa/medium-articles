@@ -1,7 +1,6 @@
 package com.emyasa.aspect;
 
 import java.util.concurrent.TimeUnit;
-import java.util.function.BiFunction;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -26,18 +25,23 @@ public class PerformanceLoggerAspect {
         Class<?> declaringClass =  methodSignature.getMethod().getDeclaringClass();
         PerformanceLogger logger = declaringClass.getAnnotation(PerformanceLogger.class);
 
-        BiFunction<Long, String, String> logMessageFormatter = ((timeInMilliseconds, unit) -> String.format("took %d %s", timeInMilliseconds, unit));
-        final String logMessage;
+        final String timeUnit;
+        final long timeTaken;
         switch (logger.timeUnit()) {
             case MILLISECONDS:
-                logMessage = logMessageFormatter.apply(timeTakenInMilliseconds, "ms");
+                timeUnit = "ms";
+                timeTaken = timeTakenInMilliseconds;
                 break;
             case SECONDS:
-                logMessage = logMessageFormatter.apply(TimeUnit.MICROSECONDS.toSeconds(timeTakenInMilliseconds), "s");
+                timeUnit = "s";
+                timeTaken = TimeUnit.MILLISECONDS.toSeconds(timeTakenInMilliseconds);
                 break;
             default:
                 throw new UnsupportedOperationException("timeUnit unsupported");
         }
+
+        final String logMessage = String.format("%s method took %d %s",
+                methodSignature.getMethod().getName(), timeTaken, timeUnit);
 
         LOGGER.info(logMessage);
     }
