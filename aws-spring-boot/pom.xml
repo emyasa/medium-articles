@@ -59,5 +59,6 @@
 
     <modules>
         <module>secrets-manager</module>
+        <module>app-config</module>
     </modules>
 </project>
