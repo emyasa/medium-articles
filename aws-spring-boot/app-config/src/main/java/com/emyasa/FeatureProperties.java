@@ -12,5 +12,4 @@ public class FeatureProperties {
     private boolean enabled;
     private int limit;
 
-
 }

@@ -6,7 +6,6 @@ import com.amazonaws.services.appconfig.model.GetConfigurationRequest;
 import com.amazonaws.services.appconfig.model.GetConfigurationResult;
 import java.io.UnsupportedEncodingException;
 import java.util.Objects;
-import org.apache.tomcat.util.json.JSONParser;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +23,8 @@ public class AwsAppConfiguration {
         appConfig = AmazonAppConfigClient.builder().build();
         request = new GetConfigurationRequest();
         request.setClientId("clientId");
-        request.setApplication("FeatureFlags");
-        request.setConfiguration("demo");
+        request.setApplication("FeatureProperties");
+        request.setConfiguration("JsonProperties");
         request.setEnvironment("dev");
     }
 
