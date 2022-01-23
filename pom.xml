@@ -51,6 +51,7 @@
         <module>java-persistence-api</module>
         <module>core-concepts</module>
         <module>aws-spring-boot</module>
+        <module>spring-boot-oauth</module>
     </modules>
 
     <properties>
