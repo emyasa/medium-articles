@@ -1,4 +1,4 @@
-package domain;
+package com.emyasa.domain;
 
 import java.util.Arrays;
 import java.util.Collection;

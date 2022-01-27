@@ -26,6 +26,7 @@ public class WebSecurityConfig {
                 )
                 .authenticationProvider(authenticationProvider())
                 .formLogin(withDefaults());
+
         return http.build();
     }
 
