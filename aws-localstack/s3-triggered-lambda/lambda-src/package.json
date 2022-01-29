@@ -1,0 +1,6 @@
+{
+  "main": "index.js",
+  "dependencies": {
+    "aws-sdk": "^2.1066.0"
+  }
+}
