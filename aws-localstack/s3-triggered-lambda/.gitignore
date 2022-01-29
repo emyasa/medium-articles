@@ -1,0 +1,3 @@
+lambda-src/*.zip
+lambda-src/package-lock.json
+lambda-src/node-modules
