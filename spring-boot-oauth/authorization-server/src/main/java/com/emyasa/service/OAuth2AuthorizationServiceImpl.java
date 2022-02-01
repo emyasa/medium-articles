@@ -1,7 +1,9 @@
 package com.emyasa.service;
 
 import com.emyasa.domain.AuthorizationModel;
-import com.emyasa.repository.AuthorizationRepository;
+import com.emyasa.domain.AuthorizationToken;
+import com.emyasa.repository.AuthorizationModelRepository;
+import com.emyasa.repository.AuthorizationTokenRepository;
 import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +18,12 @@ public class OAuth2AuthorizationServiceImpl implements OAuth2AuthorizationServic
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2AuthorizationServiceImpl.class);
 
-    private final AuthorizationRepository authorizationRepository;
+    private final AuthorizationModelRepository authorizationModelRepository;
+    private final AuthorizationTokenRepository authorizationTokenRepository;
 
-    public OAuth2AuthorizationServiceImpl(AuthorizationRepository authorizationRepository) {
-        this.authorizationRepository = authorizationRepository;
+    public OAuth2AuthorizationServiceImpl(AuthorizationModelRepository authorizationRepository, AuthorizationTokenRepository authorizationTokenRepository) {
+        this.authorizationModelRepository = authorizationRepository;
+        this.authorizationTokenRepository = authorizationTokenRepository;
     }
 
     @Transactional
@@ -27,7 +31,7 @@ public class OAuth2AuthorizationServiceImpl implements OAuth2AuthorizationServic
     public void save(OAuth2Authorization oAuth2Authorization) {
         LOGGER.info("[OAuth2AuthorizationServiceImpl][save]");
         AuthorizationModel authorization = new AuthorizationModel(oAuth2Authorization);
-        authorizationRepository.save(authorization);
+        authorizationModelRepository.save(authorization);
     }
 
     @Override
@@ -43,13 +47,13 @@ public class OAuth2AuthorizationServiceImpl implements OAuth2AuthorizationServic
 
     @Transactional
     @Override
-    public OAuth2Authorization findByToken(String s, OAuth2TokenType oAuth2TokenType) {
-        LOGGER.info("[OAuth2AuthorizationServiceImpl][findByToken]: " + s);
+    public OAuth2Authorization findByToken(String token, OAuth2TokenType oAuth2TokenType) {
+        LOGGER.info("[OAuth2AuthorizationServiceImpl][findByToken]: " + token);
         LOGGER.info("[OAuth2AuthorizationServiceImpl][findByToken]: " + oAuth2TokenType.getValue());
-        String tokenType = Objects.nonNull(oAuth2TokenType) ? oAuth2TokenType.getValue() : null;
-        AuthorizationModel authorization = authorizationRepository.findByTokensTokenAndTokensTokenType(s, tokenType)
+        String tokenType = oAuth2TokenType.getValue();
+        AuthorizationToken authorizationToken = authorizationTokenRepository.findByTokenAndTokenType(token, tokenType)
                 .orElseThrow(() -> new IllegalArgumentException("not found"));
 
-        return authorization.getOAuth2Authorization();
+        return authorizationToken.getAuthorizationModel().getOAuth2Authorization();
     }
 }

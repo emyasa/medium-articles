@@ -3,15 +3,16 @@ package com.emyasa.domain;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.Validate;
 import org.springframework.security.oauth2.core.OAuth2AuthorizationCode;
-import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization.Token;
@@ -22,7 +23,7 @@ public class AuthorizationModel {
     @Id
     private String id;
 
-    @ElementCollection
+    @OneToMany(mappedBy = "authorizationModel", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Set<AuthorizationToken> tokens;
 
     @Column(nullable = false)
@@ -55,7 +56,6 @@ public class AuthorizationModel {
         Object stateToken = oAuth2Authorization.getAttribute(OAuth2ParameterNames.STATE);
         String stateTokenValue = Objects.nonNull(stateToken) ? stateToken.toString() : null;
 
-
         this.id = oAuth2Authorization.getId();
         this.tokens = new HashSet<>();
         this.addToken(authCodeTokenValue, OAuth2ParameterNames.CODE);
@@ -65,7 +65,7 @@ public class AuthorizationModel {
 
     private void addToken(String token, String tokenType) {
         if (token != null) {
-            AuthorizationToken authorizationToken = new AuthorizationToken(token, tokenType);
+            AuthorizationToken authorizationToken = new AuthorizationToken(this, token, tokenType);
             this.tokens.add(authorizationToken);
         }
     }
