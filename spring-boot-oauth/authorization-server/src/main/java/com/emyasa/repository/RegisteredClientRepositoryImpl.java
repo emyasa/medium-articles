@@ -7,6 +7,7 @@ import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.config.ClientSettings;
 import org.springframework.stereotype.Repository;
 
 // TODO: Implement actual repo implementation
@@ -23,9 +24,15 @@ public class RegisteredClientRepositoryImpl implements RegisteredClientRepositor
     @Override
     public RegisteredClient findById(String s) {
         LOGGER.info("[RegisteredClientRepositoryImpl][findById]: " + s);
+        ClientSettings clientSettings = ClientSettings.builder()
+                .requireAuthorizationConsent(true)
+                .requireProofKey(false)
+                .build();
+
         return RegisteredClient.withId("3cc506e8-c564-4869-8c76-ece5ae5f32cb")
                 .clientId("articles-client")
                 .clientSecret("{noop}secret")
+                .clientSettings(clientSettings)
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
@@ -39,9 +46,15 @@ public class RegisteredClientRepositoryImpl implements RegisteredClientRepositor
     @Override
     public RegisteredClient findByClientId(String s) {
         LOGGER.info("[RegisteredClientRepositoryImpl][findByClientId]: " + s);
+        ClientSettings clientSettings = ClientSettings.builder()
+                .requireAuthorizationConsent(true)
+                .requireProofKey(false)
+                .build();
+
         return RegisteredClient.withId("3cc506e8-c564-4869-8c76-ece5ae5f32cb")
                 .clientId("articles-client")
                 .clientSecret("{noop}secret")
+                .clientSettings(clientSettings)
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
@@ -49,6 +62,8 @@ public class RegisteredClientRepositoryImpl implements RegisteredClientRepositor
                 .redirectUri("http://127.0.0.1:8080/authorized")
                 .scope(OidcScopes.OPENID)
                 .scope("articles.read")
+                .scope("articles.write")
+                .scope("random")
                 .build();
     }
 }

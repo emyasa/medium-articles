@@ -24,6 +24,10 @@ public class OAuth2AuthorizationConsentServiceImpl implements OAuth2Authorizatio
     @Override
     public OAuth2AuthorizationConsent findById(String s, String s1) {
         LOGGER.info("[OAuth2AuthorizationConsentServiceImpl][findById]: " + s + ":" + s1);
-        return null;
+        return OAuth2AuthorizationConsent.withId("3cc506e8-c564-4869-8c76-ece5ae5f32cb", "username")
+                .scope("random")
+                .build();
+
+        // return null;
     }
 }

@@ -44,7 +44,8 @@ public class OAuth2AuthorizationServiceImpl implements OAuth2AuthorizationServic
     @Transactional
     @Override
     public OAuth2Authorization findByToken(String s, OAuth2TokenType oAuth2TokenType) {
-        LOGGER.info("[OAuth2AuthorizationServiceImpl][findByToken]");
+        LOGGER.info("[OAuth2AuthorizationServiceImpl][findByToken]: " + s);
+        LOGGER.info("[OAuth2AuthorizationServiceImpl][findByToken]: " + oAuth2TokenType.getValue());
         String tokenType = Objects.nonNull(oAuth2TokenType) ? oAuth2TokenType.getValue() : null;
         AuthorizationModel authorization = authorizationRepository.findByTokensTokenAndTokensTokenType(s, tokenType)
                 .orElseThrow(() -> new IllegalArgumentException("not found"));

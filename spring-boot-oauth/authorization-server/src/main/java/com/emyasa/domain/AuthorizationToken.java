@@ -2,8 +2,6 @@ package com.emyasa.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import org.apache.commons.lang3.Validate;
 
 @Embeddable
@@ -23,6 +21,8 @@ public class AuthorizationToken {
     }
 
     public AuthorizationToken(String token, String tokenType) {
+        Validate.notNull(token, "token must not be null");
+
         this.token = token;
         this.tokenType = tokenType;
     }
