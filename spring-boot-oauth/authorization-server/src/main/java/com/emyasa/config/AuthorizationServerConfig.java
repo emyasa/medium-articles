@@ -9,6 +9,7 @@ import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -21,6 +22,9 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration(proxyBeanMethods = false)
 public class AuthorizationServerConfig {
+
+    @Value("${provider.settings.issuer}")
+    private String providerSettingsIssuer;
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -61,7 +65,7 @@ public class AuthorizationServerConfig {
     @Bean
     public ProviderSettings providerSettings() {
         return ProviderSettings.builder()
-                .issuer("http://localhost:9000")
+                .issuer(providerSettingsIssuer)
                 .build();
     }
 }
