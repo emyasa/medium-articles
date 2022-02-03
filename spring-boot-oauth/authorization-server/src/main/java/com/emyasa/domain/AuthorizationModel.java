@@ -11,6 +11,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.Validate;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthorizationCode;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
@@ -29,24 +30,28 @@ public class AuthorizationModel {
     @Lob
     private byte[] serializedDomain;
 
-    public String getId() {
-        return id;
-    }
-
-    public Set<AuthorizationToken> getTokens() {
-        return tokens;
-    }
-
-    public byte[] getSerializedDomain() {
-        return serializedDomain;
-    }
-
     public OAuth2Authorization getOAuth2Authorization() {
         return SerializationUtils.deserialize(serializedDomain);
     }
 
     public AuthorizationModel(OAuth2Authorization oAuth2Authorization) {
         Validate.notNull(oAuth2Authorization, "oAuth2Authorization must not null");
+
+        this.id = oAuth2Authorization.getId();
+        this.tokens = new HashSet<>();
+        this.addTokens(oAuth2Authorization);
+        this.serializedDomain = SerializationUtils.serialize(oAuth2Authorization);
+    }
+
+    public void update(OAuth2Authorization oAuth2Authorization) {
+        Validate.notNull(oAuth2Authorization, "oAuth2Authorization must not be null");
+
+        this.addTokens(oAuth2Authorization);
+        this.serializedDomain = SerializationUtils.serialize(oAuth2Authorization);
+    }
+
+    private void addTokens(OAuth2Authorization oAuth2Authorization) {
+        Validate.notNull(oAuth2Authorization, "oAuth2Authorization must not be null");
 
         Token<OAuth2AuthorizationCode> oAuth2AuthorizationCodeToken = oAuth2Authorization.getToken(OAuth2AuthorizationCode.class);
         String authCodeTokenValue = Objects.nonNull(oAuth2AuthorizationCodeToken) ?
@@ -55,17 +60,21 @@ public class AuthorizationModel {
         Object stateToken = oAuth2Authorization.getAttribute(OAuth2ParameterNames.STATE);
         String stateTokenValue = Objects.nonNull(stateToken) ? stateToken.toString() : null;
 
-        this.id = oAuth2Authorization.getId();
-        this.tokens = new HashSet<>();
+        Token<OAuth2AccessToken> oAuth2AccessToken = oAuth2Authorization.getToken(OAuth2AccessToken.class);
+        String accessTokenValue = Objects.nonNull(oAuth2AccessToken)
+                ? oAuth2AccessToken.getToken().getTokenValue() : null;
+
         this.addToken(authCodeTokenValue, OAuth2ParameterNames.CODE);
         this.addToken(stateTokenValue, OAuth2ParameterNames.STATE);
-        this.serializedDomain = SerializationUtils.serialize(oAuth2Authorization);
+        this.addToken(accessTokenValue, OAuth2AccessToken.TokenType.BEARER.getValue());
     }
 
     private void addToken(String token, String tokenType) {
         if (token != null) {
             AuthorizationToken authorizationToken = new AuthorizationToken(this, token, tokenType);
-            this.tokens.add(authorizationToken);
+            if (!tokens.contains(authorizationToken)) {
+                this.tokens.add(authorizationToken);
+            }
         }
     }
 

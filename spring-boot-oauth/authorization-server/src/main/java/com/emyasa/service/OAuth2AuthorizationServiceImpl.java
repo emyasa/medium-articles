@@ -4,6 +4,7 @@ import com.emyasa.domain.AuthorizationModel;
 import com.emyasa.domain.AuthorizationToken;
 import com.emyasa.repository.AuthorizationModelRepository;
 import com.emyasa.repository.AuthorizationTokenRepository;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
@@ -29,8 +30,15 @@ public class OAuth2AuthorizationServiceImpl implements OAuth2AuthorizationServic
     @Override
     public void save(OAuth2Authorization oAuth2Authorization) {
         LOGGER.info("[OAuth2AuthorizationServiceImpl][save]");
-        AuthorizationModel authorization = new AuthorizationModel(oAuth2Authorization);
-        authorizationModelRepository.save(authorization);
+        AuthorizationModel authorizationModel = new AuthorizationModel(oAuth2Authorization);
+
+        final Optional<AuthorizationModel> optAuthorizationModel = authorizationModelRepository.findById(oAuth2Authorization.getId());
+        if (optAuthorizationModel.isPresent()) {
+            authorizationModel = optAuthorizationModel.get();
+            authorizationModel.update(oAuth2Authorization);
+        }
+
+         authorizationModelRepository.save(authorizationModel);
     }
 
     @Override
