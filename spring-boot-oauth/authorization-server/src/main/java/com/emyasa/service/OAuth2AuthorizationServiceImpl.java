@@ -4,7 +4,6 @@ import com.emyasa.domain.AuthorizationModel;
 import com.emyasa.domain.AuthorizationToken;
 import com.emyasa.repository.AuthorizationModelRepository;
 import com.emyasa.repository.AuthorizationTokenRepository;
-import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
