@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "authorization_token")
-public class AuthToken {
+public class AuthorizationToken {
 
     @Id
     private String id;
@@ -15,6 +15,6 @@ public class AuthToken {
 
     private String tokenType;
 
-    protected AuthToken() {}
+    protected AuthorizationToken() {}
 
 }

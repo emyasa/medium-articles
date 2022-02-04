@@ -1,7 +1,7 @@
 package com.emyasa.config;
 
-import com.emyasa.domain.AuthToken;
-import com.emyasa.repository.TokenReadOnlyRepository;
+import com.emyasa.domain.AuthorizationToken;
+import com.emyasa.repository.AuthTokenReadOnlyRepository;
 import java.io.IOException;
 import java.util.Optional;
 import javax.servlet.FilterChain;
@@ -18,16 +18,16 @@ import org.springframework.web.filter.GenericFilterBean;
 @Component
 public class CheckAuthTokenFilter extends GenericFilterBean {
 
-    private final TokenReadOnlyRepository tokenReadOnlyRepository;
+    private final AuthTokenReadOnlyRepository tokenReadOnlyRepository;
 
-    public CheckAuthTokenFilter(TokenReadOnlyRepository tokenReadOnlyRepository) {
+    public CheckAuthTokenFilter(AuthTokenReadOnlyRepository tokenReadOnlyRepository) {
         this.tokenReadOnlyRepository = tokenReadOnlyRepository;
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws ServletException, IOException {
         String token = new DefaultBearerTokenResolver().resolve((HttpServletRequest) servletRequest);
-        Optional<AuthToken> authToken = tokenReadOnlyRepository.findByTokenAndTokenType(token, OAuth2AccessToken.TokenType.BEARER.getValue());
+        Optional<AuthorizationToken> authToken = tokenReadOnlyRepository.findByTokenAndTokenType(token, OAuth2AccessToken.TokenType.BEARER.getValue());
         if (!authToken.isPresent()) {
             throw new InvalidBearerTokenException("token not found.");
         }
