@@ -23,7 +23,7 @@ public class AuthorizationModel {
     @Id
     private String id;
 
-    @OneToMany(mappedBy = "authorizationModel", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @OneToMany(mappedBy = "authorizationModel", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
     private Set<AuthorizationToken> tokens;
 
     @Column(nullable = false)
@@ -39,20 +39,21 @@ public class AuthorizationModel {
 
         this.id = oAuth2Authorization.getId();
         this.tokens = new HashSet<>();
-        this.addTokens(oAuth2Authorization);
+        this.configureTokens(oAuth2Authorization);
         this.serializedDomain = SerializationUtils.serialize(oAuth2Authorization);
     }
 
     public void update(OAuth2Authorization oAuth2Authorization) {
         Validate.notNull(oAuth2Authorization, "oAuth2Authorization must not be null");
 
-        this.addTokens(oAuth2Authorization);
+        this.configureTokens(oAuth2Authorization);
         this.serializedDomain = SerializationUtils.serialize(oAuth2Authorization);
     }
 
-    private void addTokens(OAuth2Authorization oAuth2Authorization) {
+    private void configureTokens(OAuth2Authorization oAuth2Authorization) {
         Validate.notNull(oAuth2Authorization, "oAuth2Authorization must not be null");
 
+        this.tokens.clear();
         Token<OAuth2AuthorizationCode> oAuth2AuthorizationCodeToken = oAuth2Authorization.getToken(OAuth2AuthorizationCode.class);
         String authCodeTokenValue = Objects.nonNull(oAuth2AuthorizationCodeToken) ?
                 oAuth2AuthorizationCodeToken.getToken().getTokenValue() : null;
@@ -72,9 +73,7 @@ public class AuthorizationModel {
     private void addToken(String token, String tokenType) {
         if (token != null) {
             AuthorizationToken authorizationToken = new AuthorizationToken(this, token, tokenType);
-            if (!tokens.contains(authorizationToken)) {
-                this.tokens.add(authorizationToken);
-            }
+            this.tokens.add(authorizationToken);
         }
     }
 

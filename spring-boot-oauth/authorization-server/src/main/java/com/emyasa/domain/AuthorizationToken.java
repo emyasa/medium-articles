@@ -51,21 +51,4 @@ public class AuthorizationToken {
 
     protected AuthorizationToken() {}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        AuthorizationToken that = (AuthorizationToken) o;
-
-        if (token != null ? !token.equals(that.token) : that.token != null) return false;
-        return tokenType != null ? tokenType.equals(that.tokenType) : that.tokenType == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = token != null ? token.hashCode() : 0;
-        result = 31 * result + (tokenType != null ? tokenType.hashCode() : 0);
-        return result;
-    }
 }
