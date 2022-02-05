@@ -1,5 +1,6 @@
 package com.emyasa.repository;
 
+import com.emyasa.domain.RegisteredClientModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -10,7 +11,6 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.config.ClientSettings;
 import org.springframework.stereotype.Repository;
 
-// TODO: Implement actual repo implementation
 @Repository
 public class RegisteredClientRepositoryImpl implements RegisteredClientRepository {
 
@@ -19,6 +19,7 @@ public class RegisteredClientRepositoryImpl implements RegisteredClientRepositor
     @Override
     public void save(RegisteredClient registeredClient) {
         LOGGER.info("[RegisteredClientRepositoryImpl][save]: " + registeredClient.getClientId());
+//        RegisteredClientModel registeredClientModel = new RegisteredClientModel(registeredClient);
     }
 
     @Override
@@ -63,6 +64,7 @@ public class RegisteredClientRepositoryImpl implements RegisteredClientRepositor
                 .scope(OidcScopes.OPENID)
                 .scope("articles.read")
                 .scope("articles.write")
+                .scope("client.create")
                 .scope("random")
                 .build();
     }
