@@ -31,7 +31,7 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-oauth2-authorization-server</artifactId>
-            <version>${spring-auth-server.version}</version>
+            <version>0.2.2</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -45,7 +45,7 @@
     </dependencies>
 
     <properties>
-        <spring-auth-server.version>0.2.1</spring-auth-server.version>
+        <spring-auth-server.version>0.2.2</spring-auth-server.version>
         <com.h2database.version>1.3.156</com.h2database.version>
         <apache-commons.version>3.8.1</apache-commons.version>
     </properties>

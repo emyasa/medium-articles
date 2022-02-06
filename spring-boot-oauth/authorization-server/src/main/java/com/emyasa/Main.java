@@ -58,6 +58,7 @@ public class Main {
                 .redirectUri("http://127.0.0.1:8080/login/oauth2/code/articles-client-oidc")
                 .scope(OidcScopes.OPENID)
                 .scope("articles.read")
+                .scope("articles.write")
                 .scope("client.create")
                 .build();
 
