@@ -22,24 +22,23 @@ public class RegisteredClientRepositoryImpl implements RegisteredClientRepositor
     @Transactional
     @Override
     public void save(RegisteredClient registeredClient) {
-        LOGGER.info("[RegisteredClientRepositoryImpl][save]: " + registeredClient.getClientId());
+        LOGGER.info("[RegisteredClientRepositoryImpl][save]");
         RegisteredClientModel registeredClientModel = new RegisteredClientModel(registeredClient);
         registeredClientModelRepository.save(registeredClientModel);
     }
 
     @Override
     public RegisteredClient findById(String s) {
-        LOGGER.info("[RegisteredClientRepositoryImpl][findById]: " + s);
+        LOGGER.info("[RegisteredClientRepositoryImpl][findById]");
         RegisteredClientModel registeredClientModel = registeredClientModelRepository.findById(s)
                 .orElseThrow(() -> new IllegalArgumentException("id not found"));
 
         return registeredClientModel.getRegisteredClient();
     }
 
-    @Transactional
     @Override
     public RegisteredClient findByClientId(String s) {
-        LOGGER.info("[RegisteredClientRepositoryImpl][findByClientId]: " + s);
+        LOGGER.info("[RegisteredClientRepositoryImpl][findByClientId]");
         RegisteredClientModel registeredClientModel = registeredClientModelRepository.findByClientId(s)
                 .orElseThrow(() -> new IllegalArgumentException("id not found"));
 

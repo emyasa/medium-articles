@@ -17,8 +17,6 @@ public class AuthorizationConsentModel {
     private AuthorizationConsentId id;
 
     @Column(nullable = false)
-    @Basic(fetch = FetchType.EAGER)
-    @Lob
     private byte[] serializedDomain;
 
     public OAuth2AuthorizationConsent getOAuth2AuthorizationConsent() {

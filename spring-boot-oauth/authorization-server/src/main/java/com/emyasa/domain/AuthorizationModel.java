@@ -3,9 +3,11 @@ package com.emyasa.domain;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
@@ -27,7 +29,6 @@ public class AuthorizationModel {
     private Set<AuthorizationToken> tokens;
 
     @Column(nullable = false)
-    @Lob
     private byte[] serializedDomain;
 
     public OAuth2Authorization getOAuth2Authorization() {

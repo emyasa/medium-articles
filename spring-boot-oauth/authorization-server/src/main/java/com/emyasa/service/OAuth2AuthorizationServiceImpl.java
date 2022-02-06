@@ -4,6 +4,7 @@ import com.emyasa.domain.AuthorizationModel;
 import com.emyasa.domain.AuthorizationToken;
 import com.emyasa.repository.AuthorizationModelRepository;
 import com.emyasa.repository.AuthorizationTokenRepository;
+import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,12 +53,10 @@ public class OAuth2AuthorizationServiceImpl implements OAuth2AuthorizationServic
         return null;
     }
 
-    @Transactional
     @Override
     public OAuth2Authorization findByToken(String token, OAuth2TokenType oAuth2TokenType) {
-        LOGGER.info("[OAuth2AuthorizationServiceImpl][findByToken]: " + token);
-        LOGGER.info("[OAuth2AuthorizationServiceImpl][findByToken]: " + oAuth2TokenType.getValue());
-        String tokenType = oAuth2TokenType.getValue();
+        LOGGER.info("[OAuth2AuthorizationServiceImpl][findByToken]");
+        String tokenType = Objects.nonNull(oAuth2TokenType) ? oAuth2TokenType.getValue() : null;
         AuthorizationToken authorizationToken = authorizationTokenRepository.findByTokenAndTokenType(token, tokenType)
                 .orElseThrow(() -> new IllegalArgumentException("not found"));
 

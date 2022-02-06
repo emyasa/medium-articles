@@ -18,7 +18,6 @@ public class RegisteredClientModel {
     private String clientId;
 
     @Column(nullable = false)
-    @Lob
     private byte[] serializedDomain;
 
     public RegisteredClient getRegisteredClient() {
