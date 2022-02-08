@@ -1,5 +1,7 @@
 package com.emyasa.domain;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -12,11 +14,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class UserDetailsImpl implements UserDetails {
 
     private String username;
     private String password;
-    private final Set<SimpleGrantedAuthority> authorities;
+    private Collection<GrantedAuthority> authorities;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
 
     private UserDetailsImpl() {
         authorities = new HashSet<>();
@@ -59,7 +66,7 @@ public class UserDetailsImpl implements UserDetails {
 
     public static class Builder {
 
-        private UserDetailsImpl userDetails = new UserDetailsImpl();
+        private final UserDetailsImpl userDetails = new UserDetailsImpl();
 
         public Builder withUsername(String username) {
             Validate.notNull(username, "username must not be null");
