@@ -1,6 +1,6 @@
 # OAuth 2.0: Authorization Code Flow in Spring Boot
 
-Medium Articles: https://medium.com/@codeyasam
+Medium Articles: https://medium.com/@devintjcode
 
 Have any questions or concerns about this project? Feel free to reach out directly via this email: emyasa.emmanuel.yasa@gmail.com
 
