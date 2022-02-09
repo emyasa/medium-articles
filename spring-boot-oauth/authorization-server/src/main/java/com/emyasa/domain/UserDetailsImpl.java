@@ -1,8 +1,6 @@
 package com.emyasa.domain;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -19,7 +17,7 @@ public class UserDetailsImpl implements UserDetails {
 
     private String username;
     private String password;
-    private Collection<GrantedAuthority> authorities;
+    private final Collection<GrantedAuthority> authorities;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
@@ -27,6 +25,10 @@ public class UserDetailsImpl implements UserDetails {
 
     private UserDetailsImpl() {
         authorities = new HashSet<>();
+        accountNonExpired = true;
+        accountNonLocked = true;
+        credentialsNonExpired = true;
+        enabled = true;
     }
 
     @Override
@@ -46,22 +48,22 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return credentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
     public static class Builder {
