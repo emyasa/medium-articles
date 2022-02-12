@@ -39,6 +39,16 @@ public class Main {
 
         userAccountRepository.save(account);
 
+        RegisteredClient registrationClient = RegisteredClient.withId(UUID.randomUUID().toString())
+                .clientId("registration-client")
+                .clientSecret("{noop}secret")
+                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+                .scope("client.create")
+                .build();
+
+        registeredClientRepository.save(registrationClient);
+
         ClientSettings clientSettings = ClientSettings.builder()
                 .requireAuthorizationConsent(true)
                 .requireProofKey(false)
@@ -55,9 +65,9 @@ public class Main {
                 .scope(OidcScopes.OPENID)
                 .scope("articles.read")
                 .scope("articles.write")
-                .scope("client.create")
                 .build();
 
         registeredClientRepository.save(registeredClient);
+
     }
 }
