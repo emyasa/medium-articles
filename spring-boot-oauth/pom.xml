@@ -17,6 +17,7 @@
         <module>authorization-server</module>
         <module>resource-server</module>
         <module>proof-key-code-exchange-flow</module>
+        <module>core-security</module>
     </modules>
 
 </project>
