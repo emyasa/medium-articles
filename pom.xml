@@ -52,6 +52,7 @@
         <module>core-concepts</module>
         <module>aws-spring-boot</module>
         <module>spring-boot-oauth</module>
+        <module>spring-boot-kafka</module>
     </modules>
 
     <properties>
