@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MessageProducerController {
 
     private static final String TEST_TOPIC = "test-topic";
+    private static final String TEST_TOPIC_CUSTOM = "test-topic-custom";
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final KafkaTemplate<String, Object> customKafkaTemplate;
@@ -33,6 +34,6 @@ public class MessageProducerController {
     @PostMapping("/send-custom-message")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void sendCustomMessage(@RequestBody CustomMessageRequest messageRequest) {
-         customKafkaTemplate.send(TEST_TOPIC, messageRequest);
+         customKafkaTemplate.send(TEST_TOPIC_CUSTOM, messageRequest);
     }
 }
