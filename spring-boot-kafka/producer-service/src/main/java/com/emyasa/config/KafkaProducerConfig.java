@@ -1,5 +1,6 @@
 package com.emyasa.config;
 
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,8 +17,15 @@ import java.util.Map;
 @Configuration
 public class KafkaProducerConfig {
 
+    private static final String TEST_TOPIC = "test-topic";
+
     @Value("${kafka.bootstrapAddress}")
     private String bootstrapAddress;
+
+    @Bean
+    public NewTopic testTopic() {
+        return new NewTopic(TEST_TOPIC, 1, (short) 1);
+    }
 
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate() {
