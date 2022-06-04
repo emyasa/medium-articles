@@ -4,11 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spring-boot-kafka</artifactId>
+    <artifactId>spring-cloud-feign</artifactId>
     <packaging>pom</packaging>
+
     <modules>
-        <module>producer-service</module>
-        <module>consumer-service</module>
+        <module>service-a</module>
+        <module>service-b</module>
     </modules>
 
     <parent>
@@ -16,5 +17,6 @@
         <groupId>com.emyasa</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
 
 </project>

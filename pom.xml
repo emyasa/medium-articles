@@ -53,6 +53,7 @@
         <module>aws-spring-boot</module>
         <module>spring-boot-oauth</module>
         <module>spring-boot-kafka</module>
+        <module>spring-cloud-feign</module>
     </modules>
 
     <properties>
