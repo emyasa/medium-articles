@@ -6,6 +6,10 @@ Have any questions or concerns about this project? Feel free to reach out direct
 
 One can expect a response at around 11:00 GMT and onwards.
 
+---
+For those who want to support this, here's a link: https://ko-fi.com/alltimecode. (It is much appreciated, and it really makes a difference!)
+
+---
 # Quick Setup Guide (TLDR;)
 1. In the terminal, cd into <b>lambda-src</b> directory:
 <br/> <code>cd lambda-src/</code>
