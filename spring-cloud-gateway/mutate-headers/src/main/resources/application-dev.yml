@@ -1,0 +1,13 @@
+server:
+  port: 8081
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: hypothetical-api
+          uri: http://localhost:8090
+          predicates:
+            - Path=/hypothetical-path/**
+          filters:
+            - StripPrefix=1

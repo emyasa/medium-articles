@@ -54,6 +54,7 @@
         <module>spring-boot-oauth</module>
         <module>spring-boot-kafka</module>
         <module>spring-cloud-feign</module>
+        <module>spring-cloud-gateway</module>
     </modules>
 
     <properties>
