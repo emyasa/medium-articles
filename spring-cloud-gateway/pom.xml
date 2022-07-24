@@ -9,6 +9,7 @@
 
     <modules>
         <module>mutate-headers</module>
+        <module>hypothetical-api</module>
     </modules>
 
     <parent>
