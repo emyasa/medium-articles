@@ -6,9 +6,10 @@
 (defrecord WebServer []
   component/Lifecycle
   (start [this]
-         (log/info "## Starting web server")
-         (assoc this :http-server
-                (run-jetty {} {:port 3000})))
+         (let [port (get-in this [:config :server :port])]
+           (log/info "## Starting web server on port:" port)
+           (assoc this :http-server
+                  (run-jetty {} {:port port}))))
   (stop [this]
         (log/info "## Shutting down web server")
         (if-let [server (:htt-server this)]

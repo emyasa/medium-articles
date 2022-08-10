@@ -2,6 +2,7 @@
   (:require [com.stuartsierra.component :as component]
             [clojure-introduction.webserver :as webserver]))
 
-(defn system []
+(defn system [system-config]
   (component/system-map
-   :web-server (component/using (webserver/web-server) [])))
+   :config system-config
+   :web-server (component/using (webserver/web-server) [:config])))

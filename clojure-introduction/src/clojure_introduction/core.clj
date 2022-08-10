@@ -1,12 +1,13 @@
 (ns clojure-introduction.core
   (:require [clojure.tools.logging :as log]
+            [clojure-introduction.config :as config]
             [clojure-introduction.system :as system]
             [com.stuartsierra.component :as component])
   (:gen-class))
 
 (defn start [system]
   (log/info "## Starting the system")
-  (component/start (system))
+  (component/start (system (config/load-config)))
   )
 
 (defn stop [system]
