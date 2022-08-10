@@ -7,8 +7,9 @@
 
 (defn start [system]
   (log/info "## Starting the system")
-  (component/start (system (config/load-config)))
-  )
+  (-> (config/load-config)
+      system
+      component/start))
 
 (defn stop [system]
   (log/info "## Shutting down the system")
