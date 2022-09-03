@@ -55,6 +55,7 @@
         <module>spring-boot-kafka</module>
         <module>spring-cloud-feign</module>
         <module>spring-cloud-gateway</module>
+        <module>google-api</module>
     </modules>
 
     <properties>
