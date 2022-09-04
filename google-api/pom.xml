@@ -9,6 +9,7 @@
 
     <modules>
         <module>get-refresh-token</module>
+        <module>refresh-access-automatically</module>
     </modules>
 
     <parent>
