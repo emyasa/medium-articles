@@ -7,6 +7,10 @@
     <artifactId>google-api</artifactId>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>get-refresh-token</module>
+    </modules>
+
     <parent>
         <artifactId>medium-articles</artifactId>
         <groupId>com.emyasa</groupId>
